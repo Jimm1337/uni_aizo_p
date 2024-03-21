@@ -1,4 +1,5 @@
 add_executable(uni_aizo_p main.cpp)
+include_directories(${CMAKE_SOURCE_DIR}/include)
 
 # Compile options
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")

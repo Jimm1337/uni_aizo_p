@@ -26,4 +26,3 @@ find_package(gsl REQUIRED)
 
 # Code
 add_subdirectory(src)
-include_directories(include)

@@ -91,6 +91,6 @@ constexpr void binary(Itr begin, Itr end, Compare compare = Compare{}) {
   }
 }
 
-} // namespace aizo::sort::insertion
+} // namespace aizo::sortFunction::insertion
 
 #endif // UNI_AIZO_P_AIZO_SORT_INSERTION_HPP

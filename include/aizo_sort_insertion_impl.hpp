@@ -64,6 +64,6 @@ requires std::random_access_iterator< Itr > &&
   return lower;
 }
 
-} // namespace aizo::sort::insertion::impl
+} // namespace aizo::sortFunction::insertion::impl
 
 #endif // UNI_AIZO_P_AIZO_SORT_INSERTION_IMPL_HPP

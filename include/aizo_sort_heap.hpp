@@ -1,4 +1,46 @@
 #ifndef UNI_AIZO_P_AIZO_SORT_HEAP_HPP
 #define UNI_AIZO_P_AIZO_SORT_HEAP_HPP
 
+#include "aizo_sort_heap_impl.hpp"
+
+/**
+ * @brief Heap sort algorithms.
+ */
+namespace aizo::sort::heap {
+
+/**
+ * @brief Classic heap sort algorithm.
+ * @category Sort
+ * @note Time complexity: O(n log n).
+ * @headerfile aizo_sort_heap.hpp
+ *
+ * @tparam Itr Iterator type.
+ * @tparam Compare Comparison function type.
+ * @param begin Iterator to the beginning of the range.
+ * @param end Iterator to the end of the range.
+ * @param compare Comparison function.
+ *
+ * @attention Requires Itr to be at least of category RandomAccessIterator.
+ * @attention Requires Compare to be a function object that returns a boolean.
+ *
+ * @details Repeatedly Builds a heap with the given compare function each time
+ * with a smaller range.
+ */
+template< typename Itr, typename Compare = std::less<> >
+requires std::random_access_iterator< Itr > &&
+         std::is_same_v< std::invoke_result_t< Compare,
+                                               std::iter_value_t< Itr >,
+                                               std::iter_value_t< Itr > >,
+                         bool >
+constexpr void classic(Itr begin, Itr end, Compare compare = Compare{}) {
+  // Since the root will always have the element that satisfies the compare
+  // function the most we can shrink the range and consider it to be in the
+  // correct place.
+  for (auto current = begin; current != end; current = std::next(current)) {
+    impl::buildHeap(current, end, compare);
+  }
+}
+
+} // namespace aizo::sortFunction::heap
+
 #endif // UNI_AIZO_P_AIZO_SORT_HEAP_HPP

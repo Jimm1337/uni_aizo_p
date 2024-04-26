@@ -34,8 +34,8 @@ public:
    * @param max Maximum value of the array.
    * @return Random array.
    */
-  std::vector< Type > generatePureRandom(Type min, Type max) {
-    std::vector< Type > array{};
+  ds::DynamicArray< Type > generatePureRandom(Type min, Type max) {
+    ds::DynamicArray< Type > array{};
     array.resize(size);
 
     std::random_device device{};
@@ -58,7 +58,7 @@ public:
    * @param max Maximum value of the array.
    * @return Sorted ascending array.
    */
-  std::vector< Type > generateSortedAscending(Type min, Type max) {
+  ds::DynamicArray< Type > generateSortedAscending(Type min, Type max) {
     auto array = generatePureRandom(min, max);
 
     sort::quick::classic(std::begin(array), std::end(array));
@@ -72,7 +72,7 @@ public:
    * @param max Maximum value of the array.
    * @return Sorted descending array.
    */
-  std::vector< Type > generateSortedDescending(Type min, Type max) {
+  ds::DynamicArray< Type > generateSortedDescending(Type min, Type max) {
     auto array = generatePureRandom(min, max);
 
     sort::quick::classic(std::begin(array), std::end(array), std::greater<>{});
@@ -86,7 +86,7 @@ public:
    * @param max Maximum value of the array.
    * @return One-third sorted ascending array.
    */
-  std::vector< Type > generateOneThirdSortedAscending(Type min, Type max) {
+  ds::DynamicArray< Type > generateOneThirdSortedAscending(Type min, Type max) {
     auto array = generatePureRandom(min, max);
 
     const auto oneThird = size / 3;
@@ -102,7 +102,7 @@ public:
    * @param max Maximum value of the array.
    * @return One-third sorted descending array.
    */
-  std::vector< Type > generateOneThirdSortedDescending(Type min, Type max) {
+  ds::DynamicArray< Type > generateOneThirdSortedDescending(Type min, Type max) {
     auto array = generatePureRandom(min, max);
 
     const auto oneThird = size / 3;
@@ -119,7 +119,7 @@ public:
    * @param max Maximum value of the array.
    * @return Two-thirds sorted ascending array.
    */
-  std::vector< Type > generateTwoThirdsSortedAscending(Type min, Type max) {
+  ds::DynamicArray< Type > generateTwoThirdsSortedAscending(Type min, Type max) {
     auto array = generatePureRandom(min, max);
 
     const auto twoThirds = size * 2 / 3;
@@ -135,7 +135,7 @@ public:
    * @param max Maximum value of the array.
    * @return Two-thirds sorted descending array.
    */
-  std::vector< Type > generateTwoThirdsSortedDescending(Type min, Type max) {
+  ds::DynamicArray< Type > generateTwoThirdsSortedDescending(Type min, Type max) {
     auto array = generatePureRandom(min, max);
 
     const auto twoThirds = size * 2 / 3;

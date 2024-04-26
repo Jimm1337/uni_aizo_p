@@ -64,38 +64,15 @@ public:
       const auto end     = Clock::now();
       const auto elapsed = end - start;
 
-      if (elapsed >= std::chrono::hours{ 1 }) {
-        duration = { hour{ elapsed }.count(), DurationUnit::HOURS };
-      } else if (elapsed >= std::chrono::minutes{ 1 }) {
-        duration = { min{ elapsed }.count(), DurationUnit::MINUTES };
-      } else if (elapsed >= std::chrono::seconds{ 1 }) {
-        duration = { sec{ elapsed }.count(), DurationUnit::SECONDS };
-      } else if (elapsed >= std::chrono::milliseconds{ 1 }) {
-        duration = { milli{ elapsed }.count(), DurationUnit::MILLISECONDS };
-      } else if (elapsed >= std::chrono::microseconds{ 1 }) {
-        duration = { micro{ elapsed }.count(), DurationUnit::MICROSECONDS };
-      } else {
-        duration = { nano{ elapsed }.count(), DurationUnit::NANOSECONDS };
-      }
+      duration = { milli{ elapsed }.count(), DurationUnit::MILLISECONDS };
+
     } else {
       const auto start   = Clock::now();
       const auto result  = func(std::forward< Args >(args)...);
       const auto end     = Clock::now();
       const auto elapsed = end - start;
 
-      if (elapsed >= std::chrono::hours{ 1 }) {
-        duration = { hour{ elapsed }.count(), DurationUnit::HOURS };
-      } else if (elapsed >= std::chrono::minutes{ 1 }) {
-        duration = { min{ elapsed }.count(), DurationUnit::MINUTES };
-      } else if (elapsed >= std::chrono::seconds{ 1 }) {
-        duration = { sec{ elapsed }.count(), DurationUnit::SECONDS };
-      } else if (elapsed >= std::chrono::milliseconds{ 1 }) {
-        duration = { milli{ elapsed }.count(), DurationUnit::MILLISECONDS };
-      } else if (elapsed >= std::chrono::microseconds{ 1 }) {
-        duration = { micro{ elapsed }.count(), DurationUnit::MICROSECONDS };
-      } else {
-        duration = { nano{ elapsed }.count(), DurationUnit::NANOSECONDS };
-      }
+      duration = { milli{ elapsed }.count(), DurationUnit::MILLISECONDS };
 
       return result;
     }
@@ -132,6 +109,8 @@ public:
     case DurationUnit::HOURS:
       return { time, "h" };
     }
+
+    return { time, "No unit" };
   }
 
 private:

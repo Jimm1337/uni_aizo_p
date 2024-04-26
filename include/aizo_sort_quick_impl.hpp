@@ -43,10 +43,10 @@ constexpr Itr partition(Itr begin, Itr end, Compare compare = Compare{}) {
   auto high = std::prev(end);
 
   while (low < high) {
-    while (compare(*low, pivotValue)) {
+    while (compare(*low, pivotValue) && low != std::prev(end)) {
       low = std::next(low);
     }
-    while (!compare(*high, pivotValue)) {
+    while (!compare(*high, pivotValue) && high != begin) {
       high = std::prev(high);
     }
 

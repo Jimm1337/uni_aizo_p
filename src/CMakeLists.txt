@@ -16,8 +16,8 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     elseif (CMAKE_BUILD_TYPE EQUAL "RELEASE")
         target_compile_options(uni_aizo_p INTERFACE /O2)
     endif ()
-endif()
+endif ()
 
 # Libraries
-target_link_libraries(uni_aizo_p PUBLIC fmt::fmt)
-target_include_directories(uni_aizo_p PUBLIC ${fmt_INCLUDE_DIRS} ${gsl_SOURCE_DIR}/include)
+target_link_libraries(uni_aizo_p PUBLIC fmt::fmt scn::scn)
+target_include_directories(uni_aizo_p PUBLIC ${fmt_INCLUDE_DIRS} ${gsl_SOURCE_DIR}/include ${scn_INCLUDE_DIRS})

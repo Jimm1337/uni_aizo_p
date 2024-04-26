@@ -23,7 +23,8 @@ namespace aizo::sort::insertion {
  * @attention Requires Itr to be at least of category BidirectionalIterator.
  * @attention Requires Compare to be a function object that returns a boolean.
  *
- * @details Uses a nested loop to iterate over the range and swap elements one by one until they are in the correct order.
+ * @details Uses a nested loop to iterate over the range and swap elements one
+ * by one until they are in the correct order.
  */
 template< typename Itr, typename Compare = std::less<> >
 requires std::bidirectional_iterator< Itr > &&
@@ -55,42 +56,59 @@ constexpr void classic(Itr begin, Itr end, Compare compare = Compare{}) {
  * @param begin Iterator to the beginning of the range.
  * @param end Iterator to the end of the range.
  * @param compare Comparison function.
+ * @param equal Equality comparison function.
  *
  * @attention Requires Itr to be at least of category RandomAccessIterator.
- * @attention Requires Compare to be a function object that returns std::strong_ordering.
+ * @attention Requires Compare to be a function object that returns a boolean.
+ * @attention Requires EqualityComparator to be a function object that returns a
+ * boolean.
  *
- * @details Uses binary search to find the correct position for each element and then shifts the elements to make space for the new element.
+ * @details Uses binary search to find the correct position for each element and
+ * then shifts the elements to make space for the new element.
  */
-template< typename Itr, typename Compare = std::compare_three_way >
+template< typename Itr,
+          typename Compare            = std::less<>,
+          typename EqualityComparator = std::equal_to<> >
 requires std::random_access_iterator< Itr > &&
          std::is_same_v< std::invoke_result_t< Compare,
                                                std::iter_value_t< Itr >,
                                                std::iter_value_t< Itr > >,
-                         std::strong_ordering >
-constexpr void binary(Itr begin, Itr end, Compare compare = Compare{}) {
-  for (auto outerItr = std::next(begin); outerItr != end;
-       outerItr      = std::next(outerItr)) {
-    // Start from the previous element. (Compare backwards)
-    auto innerItr = std::prev(outerItr);
+                         bool > &&
+         std::is_same_v< std::invoke_result_t< EqualityComparator,
+                                               std::iter_value_t< Itr >,
+                                               std::iter_value_t< Itr > >,
+                         bool >
+constexpr void binary(Itr                begin,
+                      Itr                end,
+                      Compare            compare = Compare{},
+                      EqualityComparator equal   = EqualityComparator{}) {
+  for (auto current = std::next(begin); current != end;
+       current      = std::next(current)) {
+    auto       prev   = std::prev(current);
+    const auto target = *current;
 
-    // Up to innerItr (inclusive), the range is sorted. Find the correct
-    // position for outerItr.
-    const auto location = impl::bSearch(begin, innerItr, outerItr, compare);
+    auto pos = impl::bSearch(begin, prev, target, compare, equal);
 
-    // Save the value of outerItr.
-    const auto value = *outerItr;
+    // Make room for the target element.
+    while (prev > pos) {
+      *std::next(prev) = *prev;
 
-    // Shift the elements to make space for the new element.
-    while (innerItr >= location) {
-      *std::next(innerItr) = *innerItr;
-      innerItr             = std::prev(innerItr);
+      prev = std::prev(prev);
     }
 
-    // Insert the value of outerItr in the correct position.
-    *std::next(innerItr) = value;
+    if (prev < pos) {
+      *std::next(prev) = target;
+
+      continue;
+    }
+
+    *std::next(prev) = *prev;
+
+    // Insert the target element.
+    *prev = target;
   }
 }
 
-} // namespace aizo::sortFunction::insertion
+} // namespace aizo::sort::insertion
 
 #endif // UNI_AIZO_P_AIZO_SORT_INSERTION_HPP

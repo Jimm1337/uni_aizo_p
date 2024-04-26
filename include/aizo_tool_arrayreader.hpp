@@ -1,6 +1,8 @@
 #ifndef UNI_AIZO_P_AIZO_TOOL_ARRAYREADER_HPP
 #define UNI_AIZO_P_AIZO_TOOL_ARRAYREADER_HPP
 
+#include <iterator>
+
 namespace aizo::tool {
 
 /**
@@ -33,14 +35,14 @@ public:
    * @throws std::runtime_error if the reader is reused.
    * @return Read data with size info.
    */
-  [[nodiscard]] std::pair< std::vector< Contained >, std::size_t > read() {
+  [[nodiscard]] std::pair< ds::DynamicArray< Contained >, std::size_t > read() {
     // Single pass only
     if (!valid) {
       throw std::runtime_error{ "Reader doesn't have valid source." };
     }
 
     // Read to
-    std::vector< Contained > data{};
+    ds::DynamicArray< Contained > data{};
     std::size_t              size{};
 
     // Read size

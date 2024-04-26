@@ -20,9 +20,15 @@ CPMAddPackage(
         GITHUB_REPOSITORY microsoft/GSL
         GIT_TAG v4.0.0
 )
+CPMAddPackage(
+        NAME scn
+        GITHUB_REPOSITORY eliaskosunen/scnlib
+        GIT_TAG v2.0.2
+)
 
 find_package(fmt REQUIRED)
 find_package(gsl REQUIRED)
+find_package(scn REQUIRED)
 
 # Code
 add_subdirectory(src)

@@ -33,14 +33,18 @@ requires std::random_access_iterator< Itr > &&
                                                std::iter_value_t< Itr > >,
                          bool >
 constexpr void classic(Itr begin, Itr end, Compare compare = Compare{}) {
-  // Since the root will always have the element that satisfies the compare
-  // function the most we can shrink the range and consider it to be in the
-  // correct place.
-  for (auto current = begin; current != end; current = std::next(current)) {
-    impl::buildHeap(current, end, compare);
+  impl::buildHeap(begin, end, compare);
+
+  for (auto current = std::prev(end); current != begin;
+       current      = std::prev(current)) {
+    std::iter_swap(begin, current);
+
+    impl::heapify(begin, current, compare);
   }
+
+  std::iter_swap(begin, std::next(begin));
 }
 
-} // namespace aizo::sortFunction::heap
+} // namespace aizo::sort::heap
 
 #endif // UNI_AIZO_P_AIZO_SORT_HEAP_HPP
